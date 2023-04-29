@@ -1,7 +1,6 @@
 ## Basic Information
 - Website Demo - https://smart-auction.vercel.app
 - Smart Contract - https://mumbai.polygonscan.com/address/0xb8ae402fbc75092de7505bb50e0f39f99e4fd9a9
-- Back-End(Github) - https://github.com/Blockchain-Lighthouse/SmartAuction_BE
 - Front-End(Github) - https://github.com/Blockchain-Lighthouse/SmartAuction_FE
 - Notion (문서화) - https://www.notion.so/blockchain-lighthouse/Dapp-Smart-Auction-c02b95128c0f41cb86c9b67fb4f6f194?pvs=4
 
