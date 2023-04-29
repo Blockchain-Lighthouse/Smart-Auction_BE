@@ -401,7 +401,7 @@ export class AuctionService {
 
     async uploadIpfs(file : any) {
         const nftStorage : NFTStorage = new NFTStorage({
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDVBNUZGNDRENzZDOEM3MDU5OTI5MzM2Y2FjNDk4MmJhQzU4M0Q2RDgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NzcxMTA5MDUyMiwibmFtZSI6ImJsb2NrbmZ0In0.009EeC0tm4SxtZUiZLUbKAidKNC_0XzTWNuaTsk71bg",
+            token: process.env.IPFS_KEY,
         });
 
         const metaData = await nftStorage.store({
