@@ -1,0 +1,114 @@
+name: NEST-CICD
+
+# Config : Event 
+on:
+  push:
+    branches: ["main"]
+
+# Env
+env:
+  DOCKER_NEST_IMAGE: ghcr.io/blockchain-lighthouse/lighthouse-server
+  DOCKER_NEST_CONTAINER: nest-server
+  DOCKER_NGINX_IMAGE: ghcr.io/blockchain-lighthouse/lighthouse-nginx
+  DOCKER_NGINX_CONTAINER: nginx-server
+
+jobs:
+  # Config Test Before Build
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v3
+
+    - name: Nodejs 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.19.0
+        cache: 'npm'
+
+    - name: Setting .env
+      run: |
+        echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> .env
+        echo "DATABASE_DB=${{ secrets.DATABASE_DB }}" >> .env
+        echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> .env
+        echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+        echo "DATABASE_PORT=${{ secrets.DATABASE_PORT }}" >> .env
+        echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> .env
+        echo "REDIS_IP=${{ secrets.REDIS_IP }}" >> .env
+        echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+        echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
+        echo "SWAGGER_ID=${{ secrets.SWAGGER_ID }}" >> .env
+        echo "SWAGGER_PW=${{ secrets.SWAGGER_PW }}" >> .env
+        echo "AWS_KEY=${{ secrets.AWS_KEY }}" >> .env
+        echo "AWS_SECRET=${{ secrets.AWS_SECRET }}" >> .env
+        echo "SLACK_WEBHOOK=${{ secrets.SLACK_WEBHOOK }}" >> .env
+        echo "ALCHEMY_PROVIDER=${{ secrets.ALCHEMY_PROVIDER }}" >> .env
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+        cat .env
+
+    - run: npm install
+    - run: npm run test
+
+  # Config : Build & Push to GHCR Docker Image 
+  build:
+    needs: test
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker build
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+   
+    - name: Login to ghcr
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.BLOCKMONKEY_TOKEN }}
+
+    - name: Build and Push
+      id: docker_build
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: ${{ env.DOCKER_NEST_IMAGE }}:latest
+
+  # Config : Deploy To Cloud Server
+  deploy:
+    needs: build
+    runs-on: [self-hosted, blk]
+    steps:
+    - name: Login to ghcr
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.BLOCKMONKEY_TOKEN }}
+    # Docker Start! (Del Current Container & Image)
+    - name: Run Nest BE
+      run: |
+        echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> .env
+        echo "DATABASE_DB=${{ secrets.DATABASE_DB }}" >> .env
+        echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> .env
+        echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+        echo "DATABASE_PORT=${{ secrets.DATABASE_PORT }}" >> .env
+        echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> .env
+        echo "REDIS_IP=${{ secrets.REDIS_IP }}" >> .env
+        echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+        echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
+        echo "SWAGGER_ID=${{ secrets.SWAGGER_ID }}" >> .env
+        echo "SWAGGER_PW=${{ secrets.SWAGGER_PW }}" >> .env
+        echo "AWS_KEY=${{ secrets.AWS_KEY }}" >> .env
+        echo "AWS_SECRET=${{ secrets.AWS_SECRET }}" >> .env
+        echo "SLACK_WEBHOOK=${{ secrets.SLACK_WEBHOOK }}" >> .env
+        echo "ALCHEMY_PROVIDER=${{ secrets.ALCHEMY_PROVIDER }}" >> .env
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+        cat .env
+        docker stop ${{ env.DOCKER_NEST_CONTAINER }} && docker rm ${{ env.DOCKER_NEST_CONTAINER }} && docker rmi ${{ env.DOCKER_NEST_IMAGE }}:latest
+        docker run --env-file ./.env -d -p 8080:8080 --name ${{ env.DOCKER_NEST_CONTAINER }} --restart always ${{ env.DOCKER_NEST_IMAGE }}:latest
+    - name: Run Nginx
+      run: |
+        docker stop ${{ env.DOCKER_NGINX_CONTAINER }} && docker rm ${{ env.DOCKER_NGINX_CONTAINER }} && docker rmi ${{ env.DOCKER_NGINX_IMAGE }}:latest
+        docker run -d -p 80:80 -p 443:443 -v /cert:/etc/nginx/cert --name ${{ env.DOCKER_NGINX_CONTAINER }} --restart always ${{ env.DOCKER_NGINX_IMAGE }}:latest
