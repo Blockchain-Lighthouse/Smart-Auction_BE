@@ -67,6 +67,8 @@ export class UserService {
         const redisKey = `signup_${user.email}`;
         const verificationCodeRedis = await this.redisRepo.getRedis(redisKey);
         // Code 일치확인
+        console.log("SEE CODE==");
+        console.log(verificationCode, verificationCodeRedis);
         if (verificationCodeRedis != verificationCode) {
             throw new BadRequestException("NOT MATCH");
         }
@@ -94,8 +96,8 @@ export class UserService {
         await this.redisRepo.setRedis(redisKey, randNum, 300);
 
         // Send Verification Email;
-        const title = `Smart Auction Verification Code : ${randNum}`;
-        const content = `안녕하세요. Smart Auction입니다. \r\n 인증코드 : ${randNum} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
+        const title = `BlockchainLightHouse Verification Code : ${randNum}`;
+        const content = `안녕하세요. Blockchain LightHouse입니다. \r\n 인증코드 : ${randNum} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
         
         // 이메일 전송
         await this.awsService.sendSesEmail(
@@ -232,8 +234,8 @@ export class UserService {
         
         // Send 이메일 설정 이메일
         const url = `https://smart-auction.vercel.app/reset/${resetToken.token}`;
-        const title = `BlockchainLightHouse Reset Password`;
-        const content = `안녕하세요. Blockchain LightHouse입니다. \r\n URL : ${url} \r\n URL로 접속해서 비밀번호 초기화를 진행해주세요. \r\n 유효시간은 5분입니다.`;
+        const title = `Smart Auction Reset Password`;
+        const content = `안녕하세요. Smart Auction입니다. \r\n URL : ${url} \r\n URL로 접속해서 비밀번호 초기화를 진행해주세요. \r\n 유효시간은 5분입니다.`;
         
    
         await this.awsService.sendSesEmail(user.email, title, content);
@@ -308,7 +310,7 @@ export class UserService {
             userId : updatedUser.id
         }
     }
-    
+
     async updateUserProfile(userId : number, profileSrc : string) : Promise<User> {
         return await this.userRepo.updateUserProfile(userId, profileSrc);
     }

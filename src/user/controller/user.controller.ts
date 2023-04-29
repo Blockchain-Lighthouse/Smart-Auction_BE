@@ -103,16 +103,6 @@ export class UserController {
         return this.userService.updateNickname(body.nickname, req.user.id);
     }
 
-    @ApiOperation({ summary : "프로필 이미지 설정", description: "닉네임 설정" })
-    @UseGuards(JwtAuthGuard)
-    @Role(2)
-    @ApiBearerAuth('accesskey')
-    @CustomApiResponse(UpdateNicknameResponse)
-    @Patch("/profile")
-    async setProfileImage(@Body() body : SetProfileImageDto, @Request() req) {
-        return this.userService.updateUserProfile(req.user.id, body.profile);
-    }
-
     @ApiOperation({ summary : "비밀번호 재설정 - 이메일 전송 (1)"})
     @CustomApiResponse(SendResetPasswordEmailResponse)
     @Post("/resetpw/send-email")
@@ -152,5 +142,15 @@ export class UserController {
     async sendContactEmail(@Body() body : ContactEmailDto, @Request() req) {
         let userId = req.user.id;
         return this.userService.sendContactEmail(body, userId);
+    }
+
+    @ApiOperation({ summary : "프로필 이미지 설정", description: "닉네임 설정" })
+    @UseGuards(JwtAuthGuard)
+    @Role(2)
+    @ApiBearerAuth('accesskey')
+    @CustomApiResponse(UpdateNicknameResponse)
+    @Patch("/profile")
+    async setProfileImage(@Body() body : SetProfileImageDto, @Request() req) {
+        return this.userService.updateUserProfile(req.user.id, body.profile);
     }
 }

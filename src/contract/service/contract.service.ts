@@ -217,6 +217,8 @@ export class ContractService {
             signer
         );
 
+
+
         // 정적 호출 컨트렉트 에러체크
         try {
             // EST GAS

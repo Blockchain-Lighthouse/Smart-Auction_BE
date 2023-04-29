@@ -198,6 +198,5 @@ export class UserRepository extends Repository<User> {
             throw new HttpException(e, 400);
         }
     }
-
-  
+    
 }

@@ -10,6 +10,7 @@ import { GetMnemonicResponse} from '../dto/getMnemonicDto';
 import { DeserializeKeystoreResponse } from '../dto/deserializeKeystoreDto';
 import { SignResponse } from '../dto/signDto';
 import { RedisRepository } from 'src/redis/redis.repository';
+import { AlchemyProvider } from 'alchemy-sdk';
 
 @Injectable()
 export class WalletService {
