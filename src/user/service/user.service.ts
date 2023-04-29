@@ -128,7 +128,7 @@ export class UserService {
 
         // @로그인 완료
         // Generate Access Token
-        let acTokenResult = await this.authService.createToken(user.id, user.role, "900s");
+        let acTokenResult = await this.authService.createToken(user.id, user.role, "1800s");
 
         // Generate Refresh Token
         let rfTokenResult = await this.authService.createToken(user.id, user.role, "86400s");
@@ -234,8 +234,8 @@ export class UserService {
         
         // Send 이메일 설정 이메일
         const url = `https://smart-auction.vercel.app/reset/${resetToken.token}`;
-        const title = `BlockchainLightHouse Reset Password`;
-        const content = `안녕하세요. Blockchain LightHouse입니다. \r\n URL : ${url} \r\n URL로 접속해서 비밀번호 초기화를 진행해주세요. \r\n 유효시간은 5분입니다.`;
+        const title = `Smart Auction Reset Password`;
+        const content = `안녕하세요. Smart Auction입니다. \r\n URL : ${url} \r\n URL로 접속해서 비밀번호 초기화를 진행해주세요. \r\n 유효시간은 5분입니다.`;
         
    
         await this.awsService.sendSesEmail(user.email, title, content);
@@ -309,5 +309,9 @@ export class UserService {
         return {
             userId : updatedUser.id
         }
+    }
+
+    async updateUserProfile(userId : number, profileSrc : string) : Promise<User> {
+        return await this.userRepo.updateUserProfile(userId, profileSrc);
     }
 }

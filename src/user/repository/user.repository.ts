@@ -135,6 +135,24 @@ export class UserRepository extends Repository<User> {
         }
     }
 
+    async updateUserProfile(userId : number, profileSrc : string) : Promise<User>{
+        try {
+            const userToUpdate = await this.findOneBy({
+                id : userId,
+            })
+            if (!userToUpdate) {
+                throw new BadRequestException("USER NOT EXIST");
+            }
+
+            userToUpdate.profile = profileSrc;
+
+            await this.save(userToUpdate);
+            return userToUpdate;
+        } catch(e) {
+            throw new HttpException(e, 400);
+        }
+    }
+
     async getUserById(id : number) : Promise<User> {
         try {
             let user = await this.findOne({
@@ -180,4 +198,5 @@ export class UserRepository extends Repository<User> {
             throw new HttpException(e, 400);
         }
     }
+    
 }

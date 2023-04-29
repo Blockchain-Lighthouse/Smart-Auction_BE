@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 import { ContractService } from './service/contract.service';
 import { AuctionModule } from 'src/auction/auction.module';
 import { UserModule } from 'src/user/user.module';
-import { EventService } from './service/event.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -19,7 +18,6 @@ import { ConfigModule } from '@nestjs/config';
       useFactory: () => new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_PROVIDER),
     },
     ContractService,
-    EventService
   ],
   exports:[ContractService]
 })

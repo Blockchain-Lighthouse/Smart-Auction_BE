@@ -15,7 +15,16 @@ export class AwsController {
 
     @ApiOperation({ summary : "S3 이미지 업로드 API - 단일" })
     @Post('/s3/upload')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('file', {
+      limits : { fileSize : 10 * 1024 * 1024 },
+      fileFilter : (req, file, cb) => {
+        if (file.mimetype.match(/\/(jpg|jpeg|png)$/)) { // jpg, jpeg, png 파일 유형만 허용
+          cb(null, true);
+        } else {
+          cb(new BadRequestException('INVALID FILE TYPE'), false);
+        }
+      },
+    }))
     @ApiConsumes('multipart/form-data')
     @ApiBody({
         schema: {

@@ -18,6 +18,8 @@ import { Favorite } from 'src/entities/favorite.entity';
 import { User } from 'src/entities/user.entity';
 import { AddFavoriteResponse } from '../dto/favoriteDto';
 import { TransactionResponse } from '../dto/transactionResponse';
+import { NFTStorage, File } from "nft.storage";
+import mime from 'mime'
 
 @Injectable()
 export class AuctionService {
@@ -37,7 +39,7 @@ export class AuctionService {
         console.log(`=== Create Auction ===`);
         // 만료시간 -> 남은시간 변환 (중복제거필요)
         let dbTime = auction.expiredAt;
-        let nowUTC = new Date(); // -09:00 스케쥴러 시간 문제해결해야되
+        let nowUTC = new Date();
         let nowKST = nowUTC.getTime() + 32400000;
         const timeLeft = dbTime.getTime() - nowKST;
 
@@ -397,4 +399,19 @@ export class AuctionService {
         }
     }
 
+    async uploadIpfs(file : any) {
+        const nftStorage : NFTStorage = new NFTStorage({
+            token: process.env.IPFS_KEY,
+        });
+
+        const metaData = await nftStorage.store({
+            name: "test", // Auction Title
+            description: "test", // Auction Description
+            image: new File([file.buffer], file.originalname, { type: file.mimetype }),
+        })
+
+        let metaUri = metaData.url.split("ipfs://")[1];
+        
+        return `https://ipfs.io/ipfs/${metaUri}`;
+    }
 }
