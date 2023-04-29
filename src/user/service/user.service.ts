@@ -67,8 +67,6 @@ export class UserService {
         const redisKey = `signup_${user.email}`;
         const verificationCodeRedis = await this.redisRepo.getRedis(redisKey);
         // Code 일치확인
-        console.log("SEE CODE==");
-        console.log(verificationCode, verificationCodeRedis);
         if (verificationCodeRedis != verificationCode) {
             throw new BadRequestException("NOT MATCH");
         }
@@ -96,8 +94,8 @@ export class UserService {
         await this.redisRepo.setRedis(redisKey, randNum, 300);
 
         // Send Verification Email;
-        const title = `BlockchainLightHouse Verification Code : ${randNum}`;
-        const content = `안녕하세요. Blockchain LightHouse입니다. \r\n 인증코드 : ${randNum} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
+        const title = `Smart Auction Verification Code : ${randNum}`;
+        const content = `안녕하세요. Smart Auction입니다. \r\n 인증코드 : ${randNum} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
         
         // 이메일 전송
         await this.awsService.sendSesEmail(
@@ -128,7 +126,7 @@ export class UserService {
 
         // @로그인 완료
         // Generate Access Token
-        let acTokenResult = await this.authService.createToken(user.id, user.role, "900s");
+        let acTokenResult = await this.authService.createToken(user.id, user.role, "1800s");
 
         // Generate Refresh Token
         let rfTokenResult = await this.authService.createToken(user.id, user.role, "86400s");
@@ -309,5 +307,9 @@ export class UserService {
         return {
             userId : updatedUser.id
         }
+    }
+    
+    async updateUserProfile(userId : number, profileSrc : string) : Promise<User> {
+        return await this.userRepo.updateUserProfile(userId, profileSrc);
     }
 }

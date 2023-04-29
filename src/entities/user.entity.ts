@@ -50,6 +50,13 @@ export class User extends BaseEntity {
     })
     @Column({ nullable : true, unique : true })
     nickname : string;
+
+    @ApiProperty({
+        example : "www.aws.s3/thumbnailImage",
+        description : "프로필 이미지 URL",
+    })
+    @Column({ nullable : true })
+    profile : string;
  
     @ApiProperty({
         example : 1,

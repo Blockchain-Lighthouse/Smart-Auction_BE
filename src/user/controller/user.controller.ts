@@ -13,6 +13,7 @@ import { RefreshAccessTokenResponse } from '../dto/refreshTokenResponse';
 import { SendResetPasswordEmailDto, SendResetPasswordEmailResponse, VerifyResetPasswordEmail, VerifyResetPasswordResponse } from '../dto/resetPasswordDto';
 import { UpdateNicknameDto, UpdateNicknameResponse } from '../dto/updateNicknameDto';
 import { ContactEmailDto, ContactEmailResponse } from '../dto/contactEmailDto';
+import { SetProfileImageDto } from '../dto/setProfileImage';
 
 @Controller('users')
 @ApiTags('유저 API') // Swagger Tage 설정
@@ -76,7 +77,6 @@ export class UserController {
         return this.userService.ResendEmail(req.user.id)
     }
 
-    // ㅇㅕ기서부터 옮옮겨겨주주면면될될듯듯.
     @ApiOperation({ summary : "이메일 중복체크", description: "중복(is_dup) = true, 중복되지 않음(is_dup) = false" })
     @CustomApiResponse(DuplicateCheckResponse)
     @Post("/email/duplicate")
@@ -101,6 +101,16 @@ export class UserController {
     @Patch("/nickname")
     async updateNickname(@Body() body : UpdateNicknameDto, @Request() req) {
         return this.userService.updateNickname(body.nickname, req.user.id);
+    }
+
+    @ApiOperation({ summary : "프로필 이미지 설정", description: "닉네임 설정" })
+    @UseGuards(JwtAuthGuard)
+    @Role(2)
+    @ApiBearerAuth('accesskey')
+    @CustomApiResponse(UpdateNicknameResponse)
+    @Patch("/profile")
+    async setProfileImage(@Body() body : SetProfileImageDto, @Request() req) {
+        return this.userService.updateUserProfile(req.user.id, body.profile);
     }
 
     @ApiOperation({ summary : "비밀번호 재설정 - 이메일 전송 (1)"})
