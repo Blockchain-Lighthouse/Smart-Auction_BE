@@ -70,7 +70,7 @@ export class Auction extends BaseEntity {
     })
     contract : string;
 
-    @Column({ nullable: true })
+    @Column("varchar", { length : 1000 })
     @ApiProperty({
         example : `ipfs://navkjdnvk.j`,
         description : "경매 글 정보 IPFS Uploaded URL",
@@ -97,7 +97,4 @@ export class Auction extends BaseEntity {
         description : "경매 종료 시각",
     })
     expiredAt: Date;
-
-    // @OneToMany(()=> Chat, chat => chat.auction)
-    // chats : Chat[];
 }

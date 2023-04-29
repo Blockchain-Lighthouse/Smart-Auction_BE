@@ -7,7 +7,6 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { WalletModule } from './wallet/wallet.module';
 import * as RedisStore from "cache-manager-ioredis";
-import { ChatModule } from './chat/chat.module';
 import { AuctionModule } from './auction/auction.module';
 import { ContractModule } from './contract/contract.module';
 import { AwsModule } from './aws/aws.module';
@@ -45,7 +44,6 @@ import { RedisModule } from './redis/redis.module';
     UserModule,
     AuthModule,
     WalletModule,
-    ChatModule,
     AuctionModule,
     ContractModule,
     AwsModule,
