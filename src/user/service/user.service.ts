@@ -157,7 +157,6 @@ export class UserService {
             userBalance = getBalance.balance;
         }
 
-
         return { 
             id : user.id , 
             email : user.email, 

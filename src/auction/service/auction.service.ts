@@ -119,7 +119,6 @@ export class AuctionService {
             throw new BadRequestException("PRICE NOT ENOUGH");
         }
 
-    
         // Keystore Deserialize;
         const keyPair = await this.wallet.deserializaKeystore(bidder.keystore, body.password);
         
@@ -173,6 +172,9 @@ export class AuctionService {
                     sheduleAt : timeLeft
                 });
 
+                // ### Create Bid Logs
+                await this.bidRepo.createbidLog(body.auctionId, getAuctionRecordResult.contractPath, bidder.id, String(body.bidAmount));
+
                 return createAuctionResult;
             }
 
@@ -184,8 +186,15 @@ export class AuctionService {
                     bidAmountToString
                 );
 
+                // ### Create Bid Logs
+                await this.bidRepo.createbidLog(body.auctionId, auction.contract, bidder.id, String(body.bidAmount));
+                
                 return bidResult;
             }
+
+  
+
+
         } catch (e) {
             throw new HttpException(e, 400);
         }
