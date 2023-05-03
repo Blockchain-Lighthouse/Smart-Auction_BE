@@ -37,7 +37,7 @@
 - `TypeORM` : Object-Relational Mapping for RDB Tool
 - `MySQL` : Relational Databse
 - `AWS Cloud` : Cloud Service
-- `Github Action` : For Continuous Integration & Continuous Deploy
+- `Github Action`
 
 ---
 
