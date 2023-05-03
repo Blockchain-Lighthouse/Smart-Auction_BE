@@ -32,12 +32,12 @@
 - `Remix` : Solidity IDE & Deploy Tool
 - `Openzepplin` : Solidity Library
 - `ethers.js` : Web3 interaction javascript library
-- `Alchemy` : Blockchain Develop Service
 - `Node.js` : Backend API
 - `TypeORM` : Object-Relational Mapping for RDB Tool
-- `MySQL` : Relational Databse
+- `MySQL` : DB
 - `AWS Cloud` : Cloud Service
-- `Github Action`
+- `Github Action & Runner`
+- `Ghcr`
 
 ---
 
