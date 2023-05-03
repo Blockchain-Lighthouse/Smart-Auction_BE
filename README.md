@@ -22,8 +22,6 @@
 ## Dapp Architecture
 ![ccc](https://user-images.githubusercontent.com/66409384/235841642-192e0d51-15df-47d6-9820-745839736c0d.png)
 
-
-
 ---
 
 ## Smart Contract & Backend Consturction Skills
@@ -46,6 +44,14 @@
 ![SmartAuction_auction](https://user-images.githubusercontent.com/66409384/233330254-334feef9-8660-49e7-a6f7-c13f2ea3c14e.gif)
 
 ---
+
+## Contract 경로
+```
+  cd contract/contracts
+```
+
+---
+
 
 ## Contributors
 - <a href="https://github.com/blockmonkey1992">`Blockmonkey`</a> : Backend & Blockchain 개발
