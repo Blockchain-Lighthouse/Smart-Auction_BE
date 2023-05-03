@@ -47,5 +47,5 @@
 ---
 
 ## Contributors
-- <a href="https://github.com/blockmonkey1992">`Blockmonkey`</a> : Backend & Smart Contract 개발
+- <a href="https://github.com/blockmonkey1992">`Blockmonkey`</a> : Backend & Blockchain 개발
 - <a href="https://github.com/ctdlog">`Ctdlog`</a> : Frontend 개발
