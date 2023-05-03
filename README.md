@@ -14,7 +14,7 @@
 2. 거래시 가격할인요청 등을 통한 정보와 상이한 금액을 전달하는 문제 완화
   - Auction 입찰방식을 채택해 금액을 Smart Contract로 선입금하므로 중도 가격 할인 요청이 불가.
 
-Web2와 같은 사용자 경험 제공을 위하여 사용자에게 Mnemonic 등록 절차를 거쳐 암호화 된 Keystore를 부여해, 추후 서비스 이용시 Keystore를 사용자의 비밀번호로 복호화해 Sign Transaction을 전송할 수 있도록 구성했다. 또한 경매 정보를 IFPS에 등록하여 Service Provider의 데이터 위변조 가능성을 최소화하고, Auction Contract에 Factory Pattern을 적용하여 구매자 또는 판매자는 자신이 관계된 Contract 데이터를 바로 확인할 수 있도록 구성했다. 또한 사용자 경험 개선을 위하여 Call Static으로 EVM 상태변화 없이 사전 호출을 통해 Transaction 성공 여부를 사전에 확인하고 Transaction을 발생시키도록 하여 트랜잭션 실패로 가스 비용이 낭비되는 위험성을 최소화하여 구성했다. 
+기존 웹사이트와 같은 사용자 경험을 제공하기 위해 회원가입 후 입력한 Password로 Keystore를 암호화해 생성해준다. 이후 서비스를 이용할 때 Keystore를 유저의 비밀번호를 통해 복호화하고 SignTransaction이 가능하도록 구성함으로써 사용자는 “메타마스크”나, “서명” 등의 불편함 없이 사용이 가능하다. 또한 Sprint 1에서 Polygon Testnet을 사용해 Ethereum Testnet보다 낮은 가스비를 가져가고자 하였으나, 여전히 높은 가스비 문제와 낮은 속도 문제로 인해 사용성이 낮아졌고, Hyperledger Besu를 사용해 IBFT 블록체인 Private Network를 구성했다. 이를 통해 2초 간격으로 블록생성이되어 빠른 처리가 가능한 Private Network를 구성했다. 또한 가스비 또한 IBFT Private Network의 4개 노드 검증으로 Genesis에서 설정한 매우 낮은 가스비로 사용이 가능하도록 구성해 사용성을 더 했다.
   
 ![zsc](https://user-images.githubusercontent.com/66409384/232184665-d2b34c96-c833-4d70-bd32-ce04e9517187.png)
 
@@ -26,7 +26,7 @@ Web2와 같은 사용자 경험 제공을 위하여 사용자에게 Mnemonic 등
 ---
 
 ## Smart Contract & Backend Consturction Skills
-- `Polygon Testnet (Mumbai)` : Blockchain Network
+- `Lighthouse Private Network` : Hyperledger Besu IBFT Blockchain Network
 - `Solidity` : Smart Contract Language
 - `Hardhat` : Smart Contract Development Tool
 - `Remix` : Solidity IDE & Deploy Tool
