@@ -21,7 +21,7 @@
 ---
 
 ## Dapp Architecture
-![ccc](https://user-images.githubusercontent.com/66409384/235841642-192e0d51-15df-47d6-9820-745839736c0d.png)
+![architecture](https://user-images.githubusercontent.com/66409384/235842519-b5d6f7f2-5881-4332-b731-fc4eae15c08d.png)
 
 ---
 
