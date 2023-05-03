@@ -15,7 +15,7 @@ import { ConfigModule } from '@nestjs/config';
   providers: [
     {
       provide : ethers.providers.JsonRpcProvider,
-      useFactory: () => new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_PROVIDER),
+      useFactory: () => new ethers.providers.JsonRpcProvider("http://52.78.209.196:8545")
     },
     ContractService,
   ],

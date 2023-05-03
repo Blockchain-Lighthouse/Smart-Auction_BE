@@ -7,10 +7,12 @@
 const hre = require("hardhat");
 
 async function main() {
-  //Factory Contract Deploy;
   const FactoryContract = await hre.ethers.getContractFactory("Factory");
-  const factoryContract = await FactoryContract.deploy();
-  await factoryContract.deployed();
+  const factory = await FactoryContract.deploy();
+
+  await factory.deployed();
+
+  console.log(`FACOTRY : ${factory.address}`)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

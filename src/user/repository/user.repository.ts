@@ -28,6 +28,7 @@ export class UserRepository extends Repository<User> {
                 email : body.email,
                 password : body.password,
                 nickname : body.nickname,
+                profile : "https://blockchain-lighthouse.s3.ap-northeast-2.amazonaws.com/common/default.png"
             })
 
             await this.save(tx);

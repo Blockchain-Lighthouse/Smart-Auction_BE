@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class UploadImageResponse {
     @ApiProperty({
-        example : "https://blockchain-lighthouse.s3.ap-northeast-2.amazonaws.com/auction/users/1681205836745KakaoTalk_Photo_2022-02-14-00-39-03 001.png",
-        description : "Upload된 이미지 URL"
+        example : "https://ipfs.io/ipfs/bafyreicdrpeudimbn2gnoeccgrpqam5fzfsfyyv7yc5hjqvh7liel5bv6q/metadata.json",
+        description : "Upload된 IPFS 이미지"
     })
     path : string;
 }

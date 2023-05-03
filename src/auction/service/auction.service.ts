@@ -19,7 +19,6 @@ import { User } from 'src/entities/user.entity';
 import { AddFavoriteResponse } from '../dto/favoriteDto';
 import { TransactionResponse } from '../dto/transactionResponse';
 import { NFTStorage, File } from "nft.storage";
-import mime from 'mime'
 
 @Injectable()
 export class AuctionService {
@@ -400,18 +399,28 @@ export class AuctionService {
     }
 
     async uploadIpfs(file : any) {
-        const nftStorage : NFTStorage = new NFTStorage({
-            token: process.env.IPFS_KEY,
-        });
+        if(file.has("auction")) {
+            throw new BadRequestException("ID NOT EXIST");
+        }
 
-        const metaData = await nftStorage.store({
-            name: "test", // Auction Title
-            description: "test", // Auction Description
-            image: new File([file.buffer], file.originalname, { type: file.mimetype }),
-        })
+        const auctionId = file.get("auction");
 
-        let metaUri = metaData.url.split("ipfs://")[1];
+        const auction = await this.auctionRepo.getAuctionsById(Number(auctionId));
+
+        if (!auction) {
+            throw new BadRequestException("AUCTION NOT EXIST");
+        }
+
+        console.log(file);
+
+        // const metaData = await nftStorage.store({
+        //     name: "test", // Auction Title
+        //     description: "test", // Auction Description
+        //     image: new File([file.buffer], file.originalname, { type: file.mimetype }),
+        // })
+
+        // let metaUri = metaData.url.split("ipfs://")[1];
         
-        return `https://ipfs.io/ipfs/${metaUri}`;
+        return `https://ipfs.io/ipfs/metaUri`;
     }
 }

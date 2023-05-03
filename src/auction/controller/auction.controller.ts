@@ -122,7 +122,7 @@ export class AuctionController {
         return await this.auctionService.withdrawBySeller(body, req.user.id);
     }
 
-    @ApiOperation({ summary : "Emergency Withdraw 비상출금[사고]"})
+    @ApiOperation({ summary : "Emergency Withdraw 비상출금 [사고]"})
     @CustomApiResponse(TransactionResponse)
     @Role(2)
     @UseGuards(JwtAuthGuard)
@@ -154,6 +154,7 @@ export class AuctionController {
         }
       },
     }))
+
     @ApiConsumes('multipart/form-data')
     @ApiBody({
         schema: {
@@ -163,6 +164,10 @@ export class AuctionController {
               type: 'string',
               format: 'binary',
             },
+            auction : {
+                type : 'number',
+                format : 'number',
+            }
           },
         },
     })

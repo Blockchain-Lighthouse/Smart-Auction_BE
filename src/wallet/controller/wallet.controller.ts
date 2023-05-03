@@ -68,4 +68,13 @@ export class WalletController {
     async sign(@Body() body : SignDto, @Request() req) {
         return this.walletService.sign(req.user.id, body.password, body.auctionId, body.signMsg);
     }
+
+    @ApiOperation({ summary : "Faucet" })
+    @UseGuards(JwtAuthGuard)
+    @Role(2)
+    @ApiBearerAuth('accesskey')
+    @Post("/faucet")
+    async faucet(@Request() req) {
+        return this.walletService.faucet(req.user.id, "5");
+    }
 }

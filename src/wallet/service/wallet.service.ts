@@ -11,6 +11,7 @@ import { DeserializeKeystoreResponse } from '../dto/deserializeKeystoreDto';
 import { SignResponse } from '../dto/signDto';
 import { RedisRepository } from 'src/redis/redis.repository';
 import { AlchemyProvider } from 'alchemy-sdk';
+import { FaucetResponse } from '../dto/faucet';
 
 @Injectable()
 export class WalletService {
@@ -21,7 +22,7 @@ export class WalletService {
         private readonly auctionRepo : AuctionRepository,
         private readonly redisRepo : RedisRepository,
     ){
-        this.provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_PROVIDER)
+        this.provider = new ethers.providers.JsonRpcProvider("http://52.78.209.196:8545")
     }
 
      // # Create Random 12 words Menemonic
@@ -60,7 +61,10 @@ export class WalletService {
         const keystore : string = (await this.generateKeystore(password, mnemonic)).keystore;
         const publicKey : string = (await this.generateKeystore(password, mnemonic)).publicKey;
         const updatedUser : User = await this.userRepo.updateUserKeystore(userId, keystore, publicKey);
-
+        
+        // Faucet 회원가입 Reward 5 Coin Transfer;
+        await this.faucet(userId, "5");
+        
         return {
             id : updatedUser.id,
         };
@@ -224,6 +228,27 @@ export class WalletService {
         } catch(e) {
             throw new HttpException(e, 400);
         }
+    }
+
+    // # Facuet
+    async faucet(userId : number, value : string) : Promise<FaucetResponse>{
+        const user = await this.userRepo.getUserById(userId);
+        const weiValue = ethers.utils.parseEther(value);
+        const privateKey = process.env.FAUCET_KEY;
+        const wallet = new ethers.Wallet(privateKey, this.provider);
+
+        const sendPromise = await wallet.sendTransaction({
+            to :user.publicKey,
+            value : weiValue,
+            gasLimit : 21000
+        })
+
+        return {
+            from : sendPromise.from,
+            to : sendPromise.to,
+            value : value,
+            txHash : sendPromise.hash,
+        };
     }
 
 }

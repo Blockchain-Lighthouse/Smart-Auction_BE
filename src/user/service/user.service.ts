@@ -45,8 +45,8 @@ export class UserService {
         await this.redisRepo.setRedis(redisKey, randomNumber, 300);
 
         // Send Verification Email;
-        const title = `BlockchainLightHouse Verification Code : ${randomNumber}`;
-        const content = `안녕하세요. Blockchain LightHouse입니다. \r\n 인증코드 : ${randomNumber} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
+        const title = `Smart Auction Verification Code : ${randomNumber}`;
+        const content = `안녕하세요. Smart Auction입니다. \r\n 인증코드 : ${randomNumber} \r\n 인증코드 유효기간은 5분동안 유효합니다.`;
 
         await this.awsService.sendSesEmail(
             body.email,

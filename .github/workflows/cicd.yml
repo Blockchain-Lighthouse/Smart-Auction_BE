@@ -45,6 +45,7 @@ jobs:
         echo "ALCHEMY_PROVIDER=${{ secrets.ALCHEMY_PROVIDER }}" >> .env
         echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
         echo "IPFS_KEY=${{ secrets.IPFS_KEY }}" >> .env
+        echo "FAUCET_KEY=${{ secrets.FAUCET_KEY }}" >> .env
         cat .env
 
     - run: npm install
@@ -107,6 +108,7 @@ jobs:
         echo "ALCHEMY_PROVIDER=${{ secrets.ALCHEMY_PROVIDER }}" >> .env
         echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
         echo "IPFS_KEY=${{ secrets.IPFS_KEY }}" >> .env
+        echo "FAUCET_KEY=${{ secrets.FAUCET_KEY }}" >> .env
         cat .env
         docker stop ${{ env.DOCKER_NEST_CONTAINER }} && docker rm ${{ env.DOCKER_NEST_CONTAINER }} && docker rmi ${{ env.DOCKER_NEST_IMAGE }}:latest
         docker run --env-file ./.env -d -p 8080:8080 --name ${{ env.DOCKER_NEST_CONTAINER }} --restart always ${{ env.DOCKER_NEST_IMAGE }}:latest
