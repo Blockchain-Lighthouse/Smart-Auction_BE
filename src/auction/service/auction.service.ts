@@ -231,6 +231,7 @@ export class AuctionService {
 
         let result :{
             bidder : string;
+            bidderAddress : string;
             price : string;
             biddedAt : string;
         }[] = [];
@@ -242,6 +243,7 @@ export class AuctionService {
 
             let payload = {
                 bidder : user.nickname,
+                bidderAddress : getBidders,
                 price : ethers.utils.formatEther(getBidders.price),
                 biddedAt : getBidders.biddedAt.toString()
             }
@@ -276,7 +278,7 @@ export class AuctionService {
         const getBiddersResult = await this.getBidders(auction.contract);
         const lastBidder = getBiddersResult.bidders[getBiddersResult.bidders.length-1];
 
-        const redisKey = `${lastBidder.bidder}_${auction.id}`;
+        const redisKey = `${lastBidder.bidderAddress}_${auction.id}`;
 
         const redisSignedMsg = await this.redisRepo.getRedis(redisKey);
         if (!redisSignedMsg) {

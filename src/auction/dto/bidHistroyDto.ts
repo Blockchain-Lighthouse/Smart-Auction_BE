@@ -6,17 +6,22 @@ class Bidders  {
         description : "Bidder's eoa",
         example : "0x8bA6bE543aCc1A621a3141b7AB80bf049612CB42"
     })
-    bidder : string
+    bidder : string;
+    @ApiProperty({
+        description : "Bidder's eoa",
+        example : "0x8bA6bE543aCc1A621a3141b7AB80bf049612CB42"
+    })
+    bidderAddress : string;
     @ApiProperty({
         description : "price(eth)",
         example : "0.01"
     })
-    price : string
+    price : string;
     @ApiProperty({
         description: "biddedAt(UNIX)",
         example : "1680335179"
     })
-    biddedAt : string
+    biddedAt : string;
 }
 
 
