@@ -1,6 +1,5 @@
 ## Basic Information
 - Website Demo - https://smart-auction.vercel.app
-- Smart Contract - https://mumbai.polygonscan.com/address/0xb8ae402fbc75092de7505bb50e0f39f99e4fd9a9
 - Front-End(Github) - https://github.com/Blockchain-Lighthouse/SmartAuction_FE
 - Notion (문서화) - https://www.notion.so/blockchain-lighthouse/Dapp-Smart-Auction-c02b95128c0f41cb86c9b67fb4f6f194?pvs=4
 
@@ -21,7 +20,9 @@
 ---
 
 ## Dapp Architecture
-![ㅋㅊㄴㅋㄴㅊ](https://user-images.githubusercontent.com/66409384/235303468-e75f5354-408e-4292-98ca-11a08a22c259.png)
+![ccc](https://user-images.githubusercontent.com/66409384/235841642-192e0d51-15df-47d6-9820-745839736c0d.png)
+
+
 
 ---
 
