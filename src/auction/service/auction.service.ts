@@ -243,7 +243,7 @@ export class AuctionService {
 
             let payload = {
                 bidder : user.nickname,
-                bidderAddress : getBidders,
+                bidderAddress : getBidders[0],
                 price : ethers.utils.formatEther(getBidders.price),
                 biddedAt : getBidders.biddedAt.toString()
             }
