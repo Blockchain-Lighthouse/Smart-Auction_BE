@@ -1,6 +1,6 @@
 ## Basic Information
 - Website Demo - https://smart-auction.vercel.app
-- Notion (문서화) - https://www.notion.so/blockchain-lighthouse/Dapp-Smart-Auction-c02b95128c0f41cb86c9b67fb4f6f194?pvs=4
+- Notion (문서화) - https://www.notion.so/blockchain-lighthouse/Smart-Auction-333f6f42679c4eb49fbfd7cb58ee0415?pvs=4
 - FlowChart (Figma) - https://www.figma.com/file/9fhBD0GWdURzlrHBrtTJwn/Smart-Auction?type=whiteboard&node-id=0-1&t=qJBv68426AOTqB8Q-0
 
 ---
