@@ -26,7 +26,7 @@
 ---
 
 ## Smart Contract & Backend Consturction Skills
-- `Lighthouse Private Network` : Hyperledger Besu IBFT Blockchain Network
+- `Private Network` : Hyperledger Besu IBFT Blockchain Network
 - `Solidity` : Smart Contract Language
 - `Hardhat` : Smart Contract Development Tool
 - `Remix` : Solidity IDE & Deploy Tool
